@@ -1,3 +1,39 @@
+# ############################ DOCUMENTATION  ############################
+#
+# File contains following section and functions
+#   *Initializing the board
+#      -setting dimensions 
+#      -setting winning number
+#      -creating the board of all zeros
+#
+#   *Helper Functions
+#      -function to create a random value 2 or 4
+#      -function to fill a value in a random place in the board
+#      -filling 2 random places in the freshly initialized board
+#
+#   *Printing the Board
+#      -function to diplay the board on the console
+#
+#   *Merging functions
+#      -function to merge a single row left
+#      -function to merge board left
+#      -function to merge board right
+#      -function to transpose the board
+#      -function to merge the board upward
+#      -function to merge the board downwards
+#
+#   *Starting the game and checking win or lose
+#      -function to check if palyer won
+#      -function to check if player lost
+#      -printing the initial message and the initial board
+#      -continuous loop to take input
+#         --taking direction as input and checking validity
+#         --merging according to direction
+#         --if noting changed ask for a different direction
+#         --else check win/lose and continue if neither
+
+
+
 import random
 import copy
 # -------------------------Initalizing the board----------------------
