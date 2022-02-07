@@ -1,5 +1,5 @@
 import random
-
+import copy
 # -------------------------Initalizing the board----------------------
 
 # dimension of board ex 4x4 8x8
@@ -87,7 +87,7 @@ def mergeBoardLeft(currBoard):
 
 # merging board right
 def mergeBoardRight(currBoard):
-    for i , r in enumerate(currBoard):
+    for i, r in enumerate(currBoard):
         r.reverse()
         r=mergeRowLeft(r)
         r.reverse()
@@ -99,6 +99,7 @@ def transpose(currBoard):
     for i in range(dimension):
         for j in range(i,dimension):
             currBoard[i][j],currBoard[j][i]=currBoard[j][i],currBoard[i][j]
+    return currBoard
 
 # merging board upwards
 def mergeBoardUp(currBoard):
@@ -114,6 +115,75 @@ def mergeBoardDown(currBoard):
     currBoard=transpose(currBoard)
     return currBoard
 
+# ---------------------- Staring the game and checking win or lose  -------------------
+
+# function to check if player won
+def ifPlayerWon(currBoard):
+    for r in currBoard:
+        for c in r:
+            if c==winning_number:
+                return True
+    return False
+
+# function to check if player lost
+def ifPlayerLost(currBoard):
+    tmp_board_lose=copy.deepcopy(currBoard)
+    # testing all direction
+    tmp_board_lose=mergeBoardLeft(tmp_board_lose)
+    if tmp_board_lose==currBoard:
+        tmp_board_lose=mergeBoardRight(tmp_board_lose)
+        if tmp_board_lose==currBoard:
+            tmp_board_lose=mergeBoardUp(tmp_board_lose)
+            if tmp_board_lose==currBoard:
+                tmp_board_lose=mergeBoardDown(tmp_board_lose)
+                if tmp_board_lose==currBoard:
+                    return True
+    return False
 
 
+
+
+print("Welcome to the "+str(winning_number)+" game.")
+print("Win the game by getting the numeber "+str(winning_number) +" on the board")
+print("Use 1 to merge left, 2 to merge right, 3 to merge top and 4 to merge down")
+print("Here is the initial board")
+displayBoard()    
+
+continueGame=True
+
+while continueGame:
+    direction=input("Which direction to merge?")
+    if direction not in {"1","2","3","4"}:
+        print("Invalid Move")
+        continue
     
+    # temp board to check if anything changed in the board
+    tmp_board=copy.deepcopy(board)
+
+    if direction=="1":
+        board=mergeBoardLeft(board)
+    elif direction=="2":
+        board=mergeBoardRight(board)
+    elif direction=="3":
+        board=mergeBoardUp(board)
+    elif direction=="4":
+        board=mergeBoardDown(board)
+
+    # checking if nothing changed
+    if board==tmp_board:
+        print("Try a different move")
+    else:
+        if ifPlayerWon(board):
+            print("Hurray!!! You won ")
+            input()
+            continueGame=False
+        else:
+            fillRandomEmptyPlace(board,getNewRandomValue())
+            displayBoard()
+            if ifPlayerLost(board):
+                print("No more possible moves, you lose")
+                input()
+                continueGame=False
+
+
+
