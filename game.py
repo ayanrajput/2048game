@@ -1,9 +1,8 @@
+import random
+
 # -------------------------Initalizing the board----------------------
 
 # dimension of board ex 4x4 8x8
-import enum
-
-
 dimension=4
 
 # winning number 
@@ -11,6 +10,33 @@ winning_number=2048
 
 # board
 board=[[0 for i in range(dimension)]for j in range(dimension)]
+
+# ------------------------ Helper functions  ------------------------
+
+# get a random value to fill from (2,4)
+def getNewRandomValue():
+    rand=random.randint(1,8)
+    if rand==1:
+        return 4
+    else:
+        return 2
+
+# filling random places
+def fillRandomEmptyPlace(currBoard,val):
+    while True:
+        r_num=random.randint(0,dimension-1)
+        c_num=random.randint(0,dimension-1)
+        if currBoard[r_num][c_num]==0:
+            currBoard[r_num][c_num]=val
+            break
+    return currBoard
+
+# filling two random values in the board
+for _ in range(2):
+    val=getNewRandomValue()
+    fillRandomEmptyPlace(board,val)
+
+# -------------------- Printing the board  ---------------------------
 
 def displayBoard():
     # maximum value in the board
@@ -32,7 +58,6 @@ def displayBoard():
             else:
                 line+=" "*(spacesRequired-len(str(c)))+str(c)+"|"
         print(line)
-
 
 # -----------------  Merging Functions   -------------------
 
@@ -88,7 +113,6 @@ def mergeBoardDown(currBoard):
     currBoard=mergeBoardRight(currBoard)
     currBoard=transpose(currBoard)
     return currBoard
-
 
 
 
